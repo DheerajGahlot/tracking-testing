@@ -151,10 +151,15 @@ app.post('/MessageReceived', async (req, res) => {
     var SenderNAme = req.body.senderName;
     var SenderWatNo = req.body.waId;
     var Content = req.body.text;
+     if(Content ==null){
+       Content = req.body.listReply.title;
+     }
+      
     var Contenttype = req.body.type;
     var EventType =  req.body.eventType;
     var StatusString = req.body.statusString;
-    var ListReply = req.body.listReply.title;
+     
+    
 
       // Create a new instance of the Google Sheets API
       const sheets = google.sheets({ version: 'v4', auth: client });
@@ -164,7 +169,7 @@ app.post('/MessageReceived', async (req, res) => {
       const range = 'Sheet20';
   
       // Prepare the data to be written
-      var values = [[Time,SenderNAme,SenderWatNo,Content,Contenttype,EventType,StatusString,ListReply]];
+      var values = [[Time,SenderNAme,SenderWatNo,Content,Contenttype,EventType,StatusString]];
   
       // Write the data to the spreadsheet
       await sheets.spreadsheets.values.append({
